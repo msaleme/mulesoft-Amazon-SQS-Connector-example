@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:sqs="http://www.mulesoft.org/schema/mule/sqs" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sqs http://www.mulesoft.org/schema/mule/sqs/current/mule-sqs.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="mulesoft-amazon-sqs-connector-exampleFlow" doc:id="f01cda6d-c696-42cc-aad6-8d73ba8004eb" >
+		<sqs:receivemessages doc:name="Receive messages" doc:id="4eb35f14-5f2a-4d16-8874-2ee7e55e8617" />
+		<logger level="INFO" doc:name="Logger" doc:id="649552cc-7686-40f6-882a-929d6d5b252d" />
+		<ee:transform doc:name="Transform Message" doc:id="f37dff4c-8ccc-453e-b6d2-3c3b26db7d2f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="4bf2e601-4365-4fb9-bf5c-7327c3606a15" />
+	</flow>
+	<flow name="mulesoft-amazon-sqs-connector-exampleFlow1" doc:id="e21de989-69d1-4184-b371-def59abc138a" >
+		<http:listener doc:name="Listener" doc:id="9ac58a28-38d5-44d0-9898-639814fbc6d8" />
+		<sqs:list-queues doc:name="List queues" doc:id="7aa4bc6f-85e8-4e94-a1cc-684fc09f7cd8" />
+	</flow>
+	<flow name="mulesoft-amazon-sqs-connector-exampleFlow2" doc:id="2f876f76-857f-47df-98e5-8ce83c2dc224" >
+		<sockets:listener doc:name="Listener" doc:id="6cc8979a-f3e2-45d0-96d4-348866dd3e07" />
+		<sqs:send-message doc:name="Send message" doc:id="c397a090-442c-4acb-949a-0a809875297b" />
+	</flow>
+</mule>
